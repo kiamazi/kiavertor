@@ -8,6 +8,8 @@ kiavertor.pl -f FILENAME -d DIRNAME -e TARGETENCODING [OPTIONS...]
 
 "-f [filename] or -d [dirname]  and -e [file encoding types] is not optional
 
+target file name is **/ChoosedPath/FileName-EncodeType**
+
 ### Options:
 
 * **--help** or **-h**
