@@ -119,7 +119,7 @@ my $outputfile;
 sub usage {
  return <<EOHIPPUS
 
- $0 -f FILENAME -e TARGETENCODING [OPTIONS...]
+ kiavertor.pl -f FILENAME -e TARGETENCODING [OPTIONS...]
 -f or -d  and -e is not optional
 
 Options:
