@@ -1,6 +1,6 @@
 # kiavertor
 
-simple file decode-encode tools like iconv but with different opts
+simple file decode-encode tool like iconv but with different opts
 
 ```sh
 kiavertor.pl -f FILENAME -d DIRNAME -e TARGETENCODING [OPTIONS...]
