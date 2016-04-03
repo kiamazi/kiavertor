@@ -1,38 +1,24 @@
 # kiavertor
 
-kiavertor.pl -f FILENAME -e TARGETENCODING [OPTIONS...]
+simple file decode-encode tools like iconv but with different opts
 
-"-f [filename] or -d [dirname]  and -e [encode format] is not optional
+```sh
+kiavertor.pl -f FILENAME -d DIRNAME -e TARGETENCODING [OPTIONS...]
+```
 
-Options:
+"-f [filename] or -d [dirname]  and -e [file encoding types] is not optional
 
- --help or -h                                         : this help
- 
- --filesource=/path/file or -f /path/file             : input file name
- 
- --encodesource=cp1256 or -s cp1256                   : input file source encoding,
- 
-                                                        if dont use it encoding determined automaticly
+### Options:
+
+* **--help** or **-h**
+* **--filesource=**/path/filename or **-f** /path/filename
+* **--encodesource=**DecodingType or **-s** DecodingType
+  * if dont use -s opt, decoding determine automaticly if possible
+* **--encodetarget=**EncodingType or **-e** EncodingType
+* **--directory=**/path/ or **-d** /path/
+ * choose all files in directory
+    if use [--directory=here] or [-d here] use current path that you run
+* **--fileextension**=fileExtension or **-x** FileExtesnsion
+* **--dirtarget=**/path/dirpath/ or **-t** /path/dirpath/
                                                         
-                                                        if possible
-                                                        
- --encodetarget=utf8 or -e utf8                       : input file target encoding
- 
- --directory=/path or -d /path                        : choose all file in directory,
- 
-                                                        use with -e switche,
-                                                        
-                                                        if no -s switch source encoding
-                                                        
-                                                        determined automaticly if possible
-                                                        
- if use [--directory=here] or [-d here] use current path that you run $0 from
- 
- --fileextension = txt or -x txt                      : if use -d then you can determine
- 
-                                                        file extensions you want
-                                                        
-                                                        default file name is /path/file-encodetarget)
-                                                        
- --dirtarget=/path/dirpath/ or -t /path/dirpath/      : dir path for new files
-                                                        
+
