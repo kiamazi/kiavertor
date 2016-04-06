@@ -29,5 +29,5 @@ target file name is **/ChoosedPath/FileName-EncodeType**
 ## exapmle
 
 ```
-kiavertor.pl -f /home/user/dir/first.txt -f /home/user/anotherdir/second.srt -d here -r "^\d+\-name" -x srt -e utf8
+kiavertor.pl -f ~/dir/first.txt -f /home/user/anotherdir/second.srt -d here -r "^\d+\-name" -x srt -e utf8
 ```
