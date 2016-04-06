@@ -24,6 +24,7 @@ target file name is **/ChoosedPath/FileName-EncodeType**
  * use -x with -d to choose file-extensions you need
 * **--regex=**"REGEX" or **-r** "REGEX"
  * must use ""
+ * use -r with -d to choose files you need
 * **--dirtarget=**/path/dirpath/ or **-t** /path/dirpath/
 
 ### exapmle
