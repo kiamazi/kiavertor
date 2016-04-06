@@ -13,14 +13,14 @@ my %opts = (
 
 GetOptions(
 	   \%opts,
-	   "filesource|f=s@",
-	   "decodesource|s=s",
-	   "dirtarget|t=s",
-	   "encodetarget|e=s",
-	   "directory|d=s",
-	   "fileextension|x=s",
+		 "filesource|f=s@",
+		 "decodesource|s=s",
+		 "dirtarget|t=s",
+		 "encodetarget|e=s",
+		 "directory|d=s",
+		 "fileextension|x=s",
 		 "regex|r=s",
-	   "help|h",
+		 "help|h",
 	  );
 
 
