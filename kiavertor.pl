@@ -132,7 +132,9 @@ Options:
                                                         file extensions you want
  --dirtarget=/path/dirpath/ or -t /path/dirpath/      : dir path for new files
  --regex="REGEX" or -r "REGEX" 										    : file names with this regex
-                                                                                                               default file name is /path/file-encodetarget)
+
+
+new file name is /path/file-encodetarget)
 
 EOHIPPUS
 }
