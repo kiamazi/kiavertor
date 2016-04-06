@@ -23,4 +23,5 @@ target file name is **/ChoosedPath/FileName-EncodeType**
 * **--fileextension**=fileExtension or **-x** FileExtesnsion
  * use -x with -d to choose file-extensions you need
 * **--regex=**"REGEX" or **-r** "REGEX"
+ * must use ""
 * **--dirtarget=**/path/dirpath/ or **-t** /path/dirpath/
