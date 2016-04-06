@@ -2,7 +2,7 @@
 
 simple file decode-encode tool like iconv but with different opts
 
-```sh
+```
 kiavertor.pl -f FILENAME -d DIRNAME -e TARGETENCODING [OPTIONS...]
 ```
 
@@ -25,3 +25,9 @@ target file name is **/ChoosedPath/FileName-EncodeType**
 * **--regex=**"REGEX" or **-r** "REGEX"
  * must use ""
 * **--dirtarget=**/path/dirpath/ or **-t** /path/dirpath/
+
+## exapmle
+
+```
+kiavertor.pl -f /home/user/dir/first.txt -f /home/user/anotherdir/second.srt -d here -r "^\d+\-name" -x srt -e utf8
+```
