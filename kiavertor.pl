@@ -8,17 +8,18 @@ use Cwd;
 
 my @files;
 my %opts = (
-	    encodesource   => 'auto'
+	    decodesource   => 'auto'
 	   );
 
 GetOptions(
 	   \%opts,
-	   "filesource|f=s",
-	   "encodesource|s=s",
+	   "filesource|f=s@",
+	   "decodesource|s=s",
 	   "dirtarget|t=s",
 	   "encodetarget|e=s",
 	   "directory|d=s",
-     "fileextension|x=s",
+	   "fileextension|x=s",
+		 "regex|r=s",
 	   "help|h",
 	  );
 
@@ -30,26 +31,32 @@ GetOptions(
     # handle -h
     print usage() && exit(0) if exists $opts{help};
 
-$opts{dirtarget} =~ s:/$:: if (defined $opts{dirtarget});
+	if (defined $opts{filesource}) {
+		for (my $i = 0; $i < @{ $opts{filesource} }; $i++) {
+			if (!-e ${ $opts{filesource} }[$i]) {
+				print "${ $opts{filesource} }[$i] is not valid\n";
+			} elsif (-e ${ $opts{filesource} }[$i]) {
+				push @files, (${ $opts{filesource} }[$i]);
+			}
+		}
+	}
 
-  if (defined $opts{filesource} and !-e $opts{filesource}) {
-    print "no valid filename in -f params\n";
-		exit(0);
-  } elsif (defined $opts{filesource} and -e $opts{filesource}) {
-    push @files, ($opts{filesource});
-  }
+	$opts{dirtarget} =~ s:/$:: if (defined $opts{dirtarget} && -d defined $opts{dirtarget});
+  $opts{directory} = cwd if (defined $opts{directory} && $opts{directory} eq "here");
 
-
-  $opts{directory} = cwd if (defined $opts{directory} and $opts{directory} eq "here");
-
-  if (defined $opts{directory} and -d $opts{directory}) {
+  if (defined $opts{directory} && -d $opts{directory}) {
     $opts{directory} =~ s:/$::;
     my @fd;
+
     if (defined $opts{fileextension}) {
       @fd=glob("$opts{directory}/*.$opts{fileextension}");
     } else {
       @fd=glob("$opts{directory}/*");
     }
+
+		if (defined $opts{regex}) {
+			@fd = grep(/$opts{regex}/, @fd);
+		}
 
     foreach (@fd) {
       push @files, ($_) if (!-d $_);
@@ -57,7 +64,7 @@ $opts{dirtarget} =~ s:/$:: if (defined $opts{dirtarget});
   }
 
   foreach my $filesource (@files) {
-    if ($opts{encodesource} eq "auto") {
+    if ($opts{decodesource} eq "auto") {
       open(FILE, $filesource) || die "cannot open input file: $!\n";
       binmode(FILE);
       if(read(FILE,my $filestart, 500)) {
@@ -65,27 +72,14 @@ $opts{dirtarget} =~ s:/$:: if (defined $opts{dirtarget});
 		      if(ref($enc)) {
             kiavert ($filesource, $enc->name);
 		      } else {
-			         print "Encoding of file $filesource can't be guessed \ndo you want usse windows-1256(arabic)? [Y/N]\n";
-			         while (my $cpans = <stdin>) {
-				          chomp $cpans;
-				          my $cpans = lc($cpans);
-				          if ($cpans eq "y") {
-                    kiavert ($filesource, "cp1256");
-                    last;
-				          } elsif ($cpans eq "n") {
-					          print "you dont want open $filesource\n";
-                    last;
-				          } else {
-					          print "Y or N \n";
-				          }
-			         }
+			         print "Encoding of file $filesource can't be guessed \n";
 		      }
       } else {
 		      print "Cannot read from file $filesource\n";
       }
 	    close(FILE);
     } else {
-          kiavert ($filesource, $opts{encodesource});
+          kiavert ($filesource, $opts{decodesource});
     }
   }
 
@@ -125,7 +119,7 @@ sub usage {
 Options:
  --help or -h                                         : this help
  --filesource=/path/file or -f /path/file             : input file name
- --encodesource=cp1256 or -s cp1256                   : input file source encoding,
+ --decodesource=cp1256 or -s cp1256                   : input file source encoding,
                                                         if dont use it encoding determined automaticly
                                                         if possible
  --encodetarget=utf8 or -e utf8                       : input file target encoding
@@ -137,6 +131,7 @@ Options:
  --fileextension = txt or -x txt                      : if use -d then you can determine
                                                         file extensions you want
  --dirtarget=/path/dirpath/ or -t /path/dirpath/      : dir path for new files
+ --regex="REGEX" or -r "REGEX" 										    : file names with this regex
                                                                                                                default file name is /path/file-encodetarget)
 
 EOHIPPUS
