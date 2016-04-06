@@ -31,7 +31,7 @@ target file name is **/ChoosedPath/FileName-EncodeType**
 
 #### 1
 ```
-~$ kiavertor.pl -f ~/dir/first.txt -f /home/user/anotherdir/second.srt -d here -r "^\d+(-.*)" -e utf8
+~$ kiavertor.pl -f ~/dir/first.txt -f /home/user/anotherdir/second.srt -d here -r "^\d+\-.*" -e utf8
 
 /home/user/dir/first.txt from windows-1256 kiaverted to first.txt-utf8 in utf8
 Encoding of file /home/user/anotherdir/second.srt can't be guessed
@@ -45,7 +45,7 @@ Encoding of file /home/user/heredir/56-kpax.srt can't be guessed
 
 #### 2
 ```
-$ kiavertor.pl -f ~/dir/first.txt -f /home/user/anotherdir/second.srt -d here -r "^\d+(-.*)" -x srt -e utf8 -s cp1256 -t /home/user/targetdir/
+$ kiavertor.pl -f ~/dir/first.txt -f /home/user/anotherdir/second.srt -d here -r "^\d+\-.*)" -x srt -e utf8 -s cp1256 -t /home/user/targetdir/
 
 /home/user/dir/first.txt from cp1256 kiaverted to /home/user/targetdir/first.txt-utf8 in utf8
 /home/user/anotherdir/second.srt from cp1256 kiaverted to /home/user/targetdir/second.srt-utf in utf8
