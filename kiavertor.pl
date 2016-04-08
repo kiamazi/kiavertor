@@ -31,19 +31,26 @@ GetOptions(
     # handle -h
     print usage() && exit(0) if exists $opts{help};
 
-	if (defined $opts{filesource}) {
-		for (my $i = 0; $i < @{ $opts{filesource} }; $i++) {
-			if (!-e ${ $opts{filesource} }[$i]) {
-				print "${ $opts{filesource} }[$i] is not valid\n";
-			} elsif (-e ${ $opts{filesource} }[$i]) {
-				push @files, (${ $opts{filesource} }[$i]);
+		if (defined $opts{dirtarget}) {
+			if (-d $opts{dirtarget}) {
+				$opts{dirtarget} =~ s:/$::
+			}	else {
+				mkdir ($opts{dirtarget}, 0755) || die "Failed to create $opts{dirtarget}: $!";
 			}
 		}
-	}
 
-	$opts{dirtarget} =~ s:/$:: if (defined $opts{dirtarget} && -d defined $opts{dirtarget});
-  $opts{directory} = cwd if (defined $opts{directory} && $opts{directory} eq "here");
 
+		if (defined $opts{filesource}) {
+			for (my $i = 0; $i < @{ $opts{filesource} }; $i++) {
+				if (!-e ${ $opts{filesource} }[$i]) {
+					print "${ $opts{filesource} }[$i] is not valid file name\n";
+				} elsif (-e ${ $opts{filesource} }[$i]) {
+					push @files, (${ $opts{filesource} }[$i]);
+				}
+			}
+		}
+
+	$opts{directory} = cwd if (defined $opts{directory} && $opts{directory} eq "here");
   if (defined $opts{directory} && -d $opts{directory}) {
     $opts{directory} =~ s:/$::;
     my @fd;
@@ -87,7 +94,7 @@ GetOptions(
 sub kiavert {
   my ($inputfile, $inputbin) = @_;
 my $outputfile;
-  if (defined $opts{dirtarget} and -d defined $opts{dirtarget}) {
+  if (defined $opts{dirtarget} and -d $opts{dirtarget}) {
     my $infn = $inputfile;
     $infn =~ s:.*/(.*)$:$1:;
     $outputfile = "$opts{dirtarget}/$infn-$opts{encodetarget}";
