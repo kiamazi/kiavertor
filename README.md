@@ -13,19 +13,25 @@ target file name is **/ChoosedPath/FileName-EncodeType**
 ### Options:
 
 * **--help** or **-h**
-* **--filesource=**/path/filename or **-f** /path/filename
-* **--encodesource=**DecodingType or **-s** DecodingType
+* **-f** /path/filename
+* **-s** DecodingType
  * if dont use -s opt, decoding determine automaticly if possible
-* **--encodetarget=**EncodingType or **-e** EncodingType
-* **--directory=**/path/ or **-d** /path/
+* **-e** EncodingType
+* **-t** /new/files/path/
+* **-d** /path/
  * choose all files in a directory
  * if use [**--directory=here**] or [**-d here**] use your current path
-* **--fileextension**=fileExtension or **-x** FileExtesnsion
- * use -x with -d to choose file-extensions you need
-* **--regex=**"REGEX" or **-r** "REGEX"
- * must use ""
- * use -r with -d to choose files you need
-* **--dirtarget=**/path/dirpath/ or **-t** /path/dirpath/
+
+[Dir mode]
+* **-d** here
+ * if use [-d here] use current path that you run $0 from
+* **-x** EXTENSION       ex: -x txt
+ * if use -d then you can determine file extensions you want
+* **--regex**="REGEX" or **-r** "REGEX"
+ * choose file(s) name with your pattern
+
+
+      DIR mode ex: -d here -r "^\d\-\w+(\_flm)" -x srt
 
 ### exapmle
 
