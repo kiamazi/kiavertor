@@ -37,7 +37,7 @@ GetOptions(
     if (-d $opts{dirtarget}) {
       $opts{dirtarget} =~ s:/$::
     } else {
-      mkdir ($opts{dirtarget}, 0755) || die colored("Failed to create $opts{dirtarget}: $!", 'red'), "\n";
+      mkdir ($opts{dirtarget}, 0755) || die colored("...Failed to create $opts{dirtarget}: $!", 'red'), "\n";
     }
   }
 
@@ -45,7 +45,7 @@ GetOptions(
   if (defined $opts{filesource}) {
     for (my $i = 0; $i < @{ $opts{filesource} }; $i++) {
       if (!-e ${ $opts{filesource} }[$i]) {
-        print colored("${ $opts{filesource} }[$i] is not valid file name", 'red'), "\n";
+        print colored("...${ $opts{filesource} }[$i] is not valid file name", 'red'), "\n";
       } elsif (-e ${ $opts{filesource} }[$i]) {
         push @files, (${ $opts{filesource} }[$i]);
       }
@@ -54,7 +54,7 @@ GetOptions(
 
 
   $opts{directory} = cwd if (defined $opts{directory} && $opts{directory} eq "here");
-  
+
   if (defined $opts{directory} && -d $opts{directory}) {
     $opts{directory} =~ s:/$::;
     my @fd;
@@ -76,23 +76,23 @@ GetOptions(
 
   foreach my $filesource (@files) {
     if ($opts{decodesource} eq "auto") {
-      
-      open(FILE, $filesource) || die colored("cannot open input file: $!" , 'red'),"\n";
+
+      open(FILE, $filesource) || die colored("...cannot open input file: $!" , 'red'),"\n";
       binmode(FILE);
-      
+
       if(read(FILE,my $filestart, 500)) {
     		my $enc = guess_encoding($filestart);
 		    if(ref($enc)) {
           kiavert ($filesource, $enc->name);
 		    } else {
-		      print colored("Encoding of file $filesource can't be guessed", 'red'), "\n";
+		      print colored("...Encoding of file $filesource can't be guessed", 'red'), "\n";
 		    }
       } else {
-        print colored("Cannot read from file $filesource", 'red'), "\n";
+        print colored("...Cannot read from file $filesource", 'red'), "\n";
       }
-      
+
 	  close(FILE);
-      
+
     } else {
       kiavert ($filesource, $opts{decodesource});
     }
@@ -109,47 +109,66 @@ sub kiavert {
     $outputfile = "$inputfile-$opts{encodetarget}";
   }
 
-  open(my $INPFI, "<:encoding($inputbin)", $inputfile) || die colored("cannot open input file: $!" , 'red'),"\n";
+  open(my $INPFI, "<:encoding($inputbin)", $inputfile) || die colored("...cannot open input file: $!" , 'red'),"\n";
   my @input = <$INPFI>;
   close($INPFI);
 
-  open(my $OUPFI, ">:encoding($opts{encodetarget})", $outputfile) || die colored("cannot creat output file: $!", 'red'),"\n";
+  open(my $OUPFI, ">:encoding($opts{encodetarget})", $outputfile) || die colored("...cannot creat output file: $!", 'red'),"\n";
   foreach (@input) {
 	   print $OUPFI $_;
    }
    close($OUPFI);
 
-  print colored("$rescount - $inputbin > $opts{encodetarget}   $outputfile", 'green'), "\n";
+  print colored("[$rescount] + $inputbin > $opts{encodetarget} .... $outputfile", 'green'), "\n";
   $rescount++;
 }
 
 
 
 sub usage {
+$0 =~ s".*/(.*)"$1";
  return <<EOHIPPUS
 
- kiavertor.pl -f FILENAME -e TARGETENCODING [OPTIONS...]
--f or -d  and -e is not optional
+$0 -f FILENAME -e TARGETENCODING [OPTIONS...]
+one of <-f or -d> and -e must set
 
 Options:
- --help or -h                                         : this help
- --filesource=/path/file or -f /path/file             : input file name
- --decodesource=cp1256 or -s cp1256                   : input file source encoding,
-                                                        if dont use it encoding determined automaticly
-                                                        if possible
- --encodetarget=utf8 or -e utf8                       : input file target encoding
- --directory=/path or -d /path                        : choose all file in directory,
-                                                        use with -e switche,
-                                                        if no -s switch source encoding
-                                                        determined automaticly if possible
- if use [--directory=here] or [-d here] use current path that you run $0 from
- --fileextension = txt or -x txt                      : if use -d then you can determine
-                                                        file extensions you want
- --dirtarget=/path/dirpath/ or -t /path/dirpath/      : dir path for new files
- --regex="REGEX" or -r "REGEX" 										    : file names with this regex
+ --help or -h
+      this help
+
+ -f /path/file
+      input file name
+      can use multiple -f
+
+ -s DECODING          ex: -s windows-1256
+      file(s) source encoding
+      if dont use -s, file encoding determine automaticly if possible
+
+ -e ENCODING          ex: -e utf-8
+      file target encoding
+
+ -t /copy/new/file_s/in_this/path/
+      dir path for new files
+
+ -d /path/
+      choose all file in a directory
+
+[Dir mode]
+ -d here
+      if use [-d here] use current path that you run $0 from
+
+ -x EXTENSION       ex: -x txt
+      if use -d then you can determine file extensions you want
+
+ --regex="REGEX" or -r "REGEX"
+      choose file(s) name with your pattern
+
+      DIR mode ex: -d here -r "^\\d\-\\w+(_flm)" -x srt
 
 
-new file name is /path/file-encodetarget)
+
+
+new file name is /path/file-encodetarget
 
 EOHIPPUS
 }
