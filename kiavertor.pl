@@ -126,72 +126,36 @@ sub kiavert {
 
 
 sub usage {
-$0 =~ s".*/(.*)"$1";
- return <<EOHIPPUS
-
-<<<<<<< HEAD
-$0 -f FILENAME -e TARGETENCODING [OPTIONS...]
-=======
- kiavertor.pl -f FILENAME -e TARGETENCODING [OPTIONS...]
->>>>>>> b9faeedd13261996a90de68bbe073810fa409684
+	my $pnm=$0;
+	$pnm =~ s".*/(.*)"$1";
+	return <<EOHIPPUS
+$pnm -f FILENAME -e TARGETENCODING [OPTIONS...]
 one of <-f or -d> and -e must set
-
 Options:
- --help or -h
-      this help
-
- -f /path/file
-      input file name
-      can use multiple -f
-<<<<<<< HEAD
-
- -s DECODING          ex: -s windows-1256
-      file(s) source encoding
-      if dont use -s, file encoding determine automaticly if possible
-
- -e ENCODING          ex: -e utf-8
-      file target encoding
-
-=======
- 
- -s DECODING          ex: -s windows-1256
-      file(s) source encoding
-      if dont use -s, file encoding determine automaticly if possible
- 
- -e ENCODING          ex: -e utf-8
-      file target encoding
- 
->>>>>>> b9faeedd13261996a90de68bbe073810fa409684
- -t /copy/new/file_s/in_this/path/
-      dir path for new files
-
- -d /path/
-      choose all file in a directory
-
+--help or -h
+	this help
+-f /path/file
+	input file name
+	can use multiple -f
+-s DECODING		ex: -s windows-1256
+	file(s) source encoding
+	if dont use -s, file encoding determine automaticly if possible
+-e ENCODING 	ex: -e utf-8
+	file target encoding
+-t /copy/new/file_s/in_this/path/
+	dir path for new files
+-d /path/
+|	choose all file in a directory
+|
+v
 [Dir mode]
- -d here
-      if use [-d here] use current path that you run $0 from
-<<<<<<< HEAD
-
-=======
- 
->>>>>>> b9faeedd13261996a90de68bbe073810fa409684
- -x EXTENSION       ex: -x txt
-      if use -d then you can determine file extensions you want
-
- --regex="REGEX" or -r "REGEX"
-      choose file(s) name with your pattern
-
-<<<<<<< HEAD
-      DIR mode ex: -d here -r "^\\d\-\\w+(_flm)" -x srt
-=======
-      DIR mode ex: -d here -r "^\d\-\w+(\_flm)" -x srt
->>>>>>> b9faeedd13261996a90de68bbe073810fa409684
-
-
-
-
+-d here
+	if use [-d here] use current path that you run $pnm from
+-x EXTENSION       ex: -x txt
+	if use -d then you can choose all files with same extensions in your path
+--regex="REGEX" or -r "REGEX"
+	choose file(s) name with your pattern
+	DIR mode ex: -d here -r "^\\d\-\\w+(_flm)" -x srt
 new file name is /path/file-encodetarget
-
 EOHIPPUS
 }
