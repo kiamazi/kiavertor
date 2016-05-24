@@ -34,10 +34,11 @@ GetOptions(
   print usage() && exit(0) if exists $opts{help};
 
   if (defined $opts{dirtarget}) {
+  	$opts{dirtarget} =~ s: :\\ :;
     if (-d $opts{dirtarget}) {
       $opts{dirtarget} =~ s:/$::
     } else {
-      mkdir ($opts{dirtarget}, 0755) || die colored("...Failed to create $opts{dirtarget}: $!", 'red'), "\n";
+    	mkdir ($opts{dirtarget}, 0755) || die colored("...Failed to create $opts{dirtarget}: $!", 'red'), "\n";
     }
   }
 
@@ -57,6 +58,8 @@ GetOptions(
 
   if (defined $opts{directory} && -d $opts{directory}) {
     $opts{directory} =~ s:/$::;
+    $opts{directory} =~ s: :\\ :;
+    print "$opts{directory}\n";
     my @fd;
 
     if (defined $opts{fileextension}) {
