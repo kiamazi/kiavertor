@@ -59,7 +59,6 @@ GetOptions(
   if (defined $opts{directory} && -d $opts{directory}) {
     $opts{directory} =~ s:/$::;
     $opts{directory} =~ s: :\\ :;
-    print "$opts{directory}\n";
     my @fd;
 
     if (defined $opts{fileextension}) {
