@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 use warnings;
 use strict;
@@ -7,10 +7,13 @@ use Getopt::Long;
 use Term::ANSIColor;
 use Cwd;
 
+my $direct = cwd;
+$direct =~ s:(.*):\Q\g1\E:; exit;
+
 my @files;
 our $rescount = 1;
 my %opts = (
-	    decodesource   => 'auto'
+	    decodesource => 'auto'
 	   );
 
 GetOptions(
@@ -34,7 +37,7 @@ GetOptions(
   print usage() && exit(0) if exists $opts{help};
 
   if (defined $opts{dirtarget}) {
-  	$opts{dirtarget} =~ s: :\\ :;
+  	$opts{dirtarget} =~ s:(.*):\Q$1\E:;
     if (-d $opts{dirtarget}) {
       $opts{dirtarget} =~ s:/$::
     } else {
@@ -58,7 +61,8 @@ GetOptions(
 
   if (defined $opts{directory} && -d $opts{directory}) {
     $opts{directory} =~ s:/$::;
-    $opts{directory} =~ s: :\\ :;
+    #$opts{directory} =~ s: :\\ :;
+		$opts{directory} =~ s:(.*):\Q$1\E:; #s:(\W):\\$1:g;
     my @fd;
 
     if (defined $opts{fileextension}) {
