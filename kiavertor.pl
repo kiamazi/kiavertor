@@ -7,8 +7,6 @@ use Getopt::Long;
 use Term::ANSIColor;
 use Cwd;
 
-my $direct = cwd;
-$direct =~ s:(.*):\Q\g1\E:; exit;
 
 my @files;
 our $rescount = 1;
@@ -57,7 +55,11 @@ GetOptions(
   }
 
 
-  $opts{directory} = cwd if (defined $opts{directory} && $opts{directory} eq "here");
+  
+#  $direct =~ s:(.*):\Q$1\E:;
+  my $directcwd = cwd;
+  $directcwd = "\Q$direct\E";
+  $opts{directory} = $directcwd if (defined $opts{directory} && $opts{directory} eq "here");
 
   if (defined $opts{directory} && -d $opts{directory}) {
     $opts{directory} =~ s:/$::;
