@@ -46,9 +46,9 @@ GetOptions(
 
   if (defined $opts{filesource}) {
     for (my $i = 0; $i < @{ $opts{filesource} }; $i++) {
-      if (!-e ${ $opts{filesource} }[$i]) {
+      if (!-f ${ $opts{filesource} }[$i]) {
         print colored("...${ $opts{filesource} }[$i] is not valid file name", 'red'), "\n";
-      } elsif (-e ${ $opts{filesource} }[$i]) {
+      } elsif (-f ${ $opts{filesource} }[$i]) {
         push @files, (${ $opts{filesource} }[$i]);
       }
     }
@@ -58,7 +58,7 @@ GetOptions(
   
 #  $direct =~ s:(.*):\Q$1\E:;
   my $directcwd = cwd;
-  $directcwd = "\Q$direct\E";
+  $directcwd = "\Q$directcwd\E";
   $opts{directory} = $directcwd if (defined $opts{directory} && $opts{directory} eq "here");
 
   if (defined $opts{directory} && -d $opts{directory}) {
