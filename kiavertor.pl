@@ -6,7 +6,7 @@ use Encode::Guess;
 use Getopt::Long;
 use Term::ANSIColor;
 use Cwd;
-
+use 5.012;
 
 my @files;
 our $rescount = 1;
@@ -58,13 +58,13 @@ GetOptions(
   
 #  $direct =~ s:(.*):\Q$1\E:;
   my $directcwd = cwd;
-  $directcwd = "\Q$directcwd\E";
+#  $directcwd = "\Q$directcwd\E";
   $opts{directory} = $directcwd if (defined $opts{directory} && $opts{directory} eq "here");
 
   if (defined $opts{directory} && -d $opts{directory}) {
     $opts{directory} =~ s:/$::;
     #$opts{directory} =~ s: :\\ :;
-		$opts{directory} =~ s:(.*):\Q$1\E:; #s:(\W):\\$1:g;
+	$opts{directory} =~ s:(.*):\Q$1\E:; #s:(\W):\\$1:g;
     my @fd;
 
     if (defined $opts{fileextension}) {
