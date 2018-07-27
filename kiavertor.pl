@@ -144,6 +144,15 @@ sub kiavert {
         $outputfile = "$inputfile-$opts{encodetarget}";
     }
 
+    my $num = 1;
+    while (-e $outputfile)
+    {
+        my $tfi = $outputfile;
+        $tfi .= "-$num";
+        ($outputfile = $tfi) if not -e $tfi;
+        ++$num;
+    }
+
     my $file_content;
     {
         open( my $INPFI, "<:encoding($inputbin)", $inputfile )
