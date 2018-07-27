@@ -102,7 +102,6 @@ foreach my $filesource (@files)
 {
     if ( $opts{decodesource} eq "auto" )
     {
-
         open( FILE, $filesource )
           || die colored( "...cannot open input file: $!", 'red' ), "\n";
         binmode(FILE);
@@ -125,9 +124,7 @@ foreach my $filesource (@files)
             print colored( "...Cannot read from file $filesource", 'red' ),
               "\n";
         }
-
         close(FILE);
-
     } else
     {
         kiavert( $filesource, $opts{decodesource} );
