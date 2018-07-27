@@ -144,17 +144,18 @@ sub kiavert {
         $outputfile = "$inputfile-$opts{encodetarget}";
     }
 
-    open( my $INPFI, "<:encoding($inputbin)", $inputfile )
-      || die colored( "...cannot open input file: $!", 'red' ), "\n";
-    my @input = <$INPFI>;
-    close($INPFI);
+    my $file_content;
+    {
+        open( my $INPFI, "<:encoding($inputbin)", $inputfile )
+        || die colored( "...cannot open input file: $!", 'red' ), "\n";
+        local $/ = undef;
+        $file_content = <$INPFI>;
+        close($INPFI);
+    }
 
     open( my $OUPFI, ">:encoding($opts{encodetarget})", $outputfile )
       || die colored( "...cannot creat output file: $!", 'red' ), "\n";
-    foreach (@input)
-    {
-        print $OUPFI $_;
-    }
+    print $OUPFI $file_content;
     close($OUPFI);
 
     print colored(
